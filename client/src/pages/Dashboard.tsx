@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import "../styles/Dashboard.css";
+
 
 function Dashboard() {
   const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -17,32 +21,71 @@ function Dashboard() {
 
         setUser(res.data.user);
       } catch (err) {
-        console.log(err);
+        navigate("/");
       }
     };
 
     fetchProfile();
   }, []);
 
-  return (
-  <div
-    style={{
-      padding: "40px",
-      background: "#f5f7fb",
-      minHeight: "100vh",
-      color: "#222",
-    }}
-  >
-    <h1>🎉 Dashboard</h1>
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
-    {user && (
-      <>
-        <h2>Welcome {user.email}</h2>
-        <p>User ID: {user.id}</p>
-      </>
-    )}
-  </div>
-);
+  return (
+    <div className="dashboard">
+
+      <div className="navbar">
+        <h2>🚀 SkillBridge AI</h2>
+
+        <button
+          className="logout-btn"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      </div>
+
+      <div className="container">
+
+        <div className="welcome-card">
+          <h1>👋 Welcome {user?.email}</h1>
+          <p>User ID : {user?.id}</p>
+        </div>
+
+        <div className="cards">
+
+          <div
+  className="card"
+  style={{ cursor: "pointer" }}
+  onClick={() => navigate("/resume")}
+>
+  <h1>📄</h1>
+  <h3>Resume Upload</h3>
+</div>
+
+          <div className="card">
+            <h1>🤖</h1>
+            <h3>AI Analysis</h3>
+          </div>
+
+          <div className="card">
+            <h1>💼</h1>
+            <h3>Jobs</h3>
+          </div>
+
+          <div className="card">
+            <h1>📈</h1>
+            <h3>Skills</h3>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default Dashboard;
