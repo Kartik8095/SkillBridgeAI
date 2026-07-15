@@ -1,69 +1,218 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #222;
+.login-page{
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+    overflow:hidden;
 }
 
-* {
-  box-sizing: border-box;
+
+.login-content{
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    max-width: 700px;
+
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.email-section,
+.password-section,
+.button-section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.login-card {
-  width: 380px;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+.email-section{
+    margin-top: 40px;
 }
 
-.login-card h1 {
-  text-align: center;
-  color: #2563eb;
+.password-section{
+    margin-top: 25px;
 }
 
-.login-card h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #444;
+.button-section{
+    margin-top: 40px;
+}
+/* ==========================
+   Animated Input
+========================== */
+
+.animated-input{
+
+width:520px;
+height:75px;
+
+display:flex;
+align-items:center;
+
+padding:0 20px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+transition:0.0s;
+
 }
 
-.login-card input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-  background: white;
-  color: black;
-  font-size: 16px;
+.animated-input:hover{
+
+transform:translateY(-3px);
+
+border-color:#38BDF8;
+
+box-shadow:
+0 0 25px rgba(56,189,248,.45);
+
 }
 
-.login-card button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+.animated-input input{
+
+flex:1;
+
+width:100%;
+
+height:100%;
+
+background:transparent;
+
+border:none;
+
+outline:none;
+
+box-shadow:none;
+
+font-size:20px;
+
+color:white;
+
+padding:0 15px;
+
+margin:0;
+
+font-family:inherit;
+
 }
 
-.login-card button:hover {
-  background: #1d4ed8;
+
+.animated-input input::-webkit-input-placeholder{
+    color:#CBD5E1;
 }
 
-.login-card p {
-  text-align: center;
-  margin-top: 20px;
+.animated-input input:-webkit-autofill,
+.animated-input input:-webkit-autofill:hover,
+.animated-input input:-webkit-autofill:focus{
+
+-webkit-text-fill-color:white;
+
+-webkit-box-shadow:0 0 0px 1000px transparent inset;
+
+transition:background-color 9999s ease-in-out 0s;
+
+}
+
+.left-icon{
+
+font-size:24px;
+
+color:#38BDF8;
+
+}
+
+.right-icon{
+
+font-size:22px;
+
+color:#38BDF8;
+
+cursor:pointer;
+
+margin-left:15px;
+
+}
+
+/* ==========================
+   Login Button
+========================== */
+
+.animated-button{
+
+width:520px;
+
+height:65px;
+
+border:none;
+
+border-radius:18px;
+
+background:#2563EB;
+
+color:white;
+
+font-size:22px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.0.0s;
+
+box-shadow:
+0 10px 30px rgba(37,99,235,.4);
+
+}
+
+.animated-button:hover{
+
+background:#3B82F6;
+
+box-shadow:
+0 0 30px rgba(59,130,246,.7);
+
+}
+
+/* ==========================
+   Register Link
+========================== */
+
+.register-link{
+
+margin-top:25px;
+
+font-size:18px;
+
+color:white;
+
+}
+
+.register-link a{
+
+color:#38BDF8;
+
+text-decoration:none;
+
+}
+
+.register-link a:hover{
+
+text-decoration:underline;
+
 }

@@ -7,7 +7,12 @@ const router = express.Router();
 const {
   uploadResume,
   getMyResumes,
-  deleteResume
+  deleteResume,
+  analyzeResume,
+  getDashboardStats,
+  getProfile,
+  updateProfile,
+  getCareerCoach,
 } = require("../controllers/resumeController");
 
 const storage = multer.diskStorage({
@@ -22,6 +27,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// Profile
+router.get("/profile", verifyToken, getProfile);
+router.put("/profile", verifyToken, updateProfile);
+
+// Resume
 router.post(
   "/upload",
   verifyToken,
@@ -29,8 +39,28 @@ router.post(
   uploadResume
 );
 
-
-
 router.get("/my", verifyToken, getMyResumes);
+
 router.delete("/delete/:id", verifyToken, deleteResume);
+
+router.get(
+  "/analyze/:filename",
+  verifyToken,
+  analyzeResume
+);
+
+// Dashboard
+router.get(
+  "/dashboard",
+  verifyToken,
+  getDashboardStats
+);
+
+// Career Coach
+router.get(
+  "/career-coach",
+  verifyToken,
+  getCareerCoach
+);
+
 module.exports = router;

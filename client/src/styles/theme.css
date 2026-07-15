@@ -1,0 +1,21 @@
+:root {
+
+  --primary: #2563EB;
+  --secondary: #38BDF8;
+  --accent: #06B6D4;
+
+  --background: #020617;
+
+  --glass: rgba(255,255,255,.08);
+
+  --glass-border: rgba(255,255,255,.15);
+
+  --text: #ffffff;
+
+  --text-secondary:#cbd5e1;
+
+  --shadow:0 15px 40px rgba(0,0,0,.35);
+
+  --radius:22px;
+
+}

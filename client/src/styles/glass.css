@@ -1,0 +1,29 @@
+.glass-panel {
+
+width:380px;
+
+padding:22px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:22px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+transition:.3s;
+
+}
+
+.glass-panel:hover{
+
+border-color:#38BDF8;
+
+box-shadow:
+0 0 25px rgba(56,189,248,.4),
+0 20px 40px rgba(0,0,0,.4);
+
+}

@@ -5,6 +5,10 @@ import "../styles/Resume.css";
 function Resume() {
   const [file, setFile] = useState<File | null>(null);
   const [resumes, setResumes] = useState<any[]>([]);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  // Upload Resume
   const uploadResume = async () => {
     if (!file) {
       alert("Please select a resume first.");
@@ -25,56 +29,85 @@ function Resume() {
       });
 
       alert(res.data.message);
+
+      setFile(null);
       fetchResumes();
-    } catch (err: any) {
+    } catch (err) {
       console.log(err);
       alert("Upload failed");
     }
   };
-const fetchResumes = async () => {
-  try {
-    const token = localStorage.getItem("token");
 
-    const res = await api.get("/resume/my", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  // Fetch Resumes
+  const fetchResumes = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    setResumes(res.data.resumes);
-  } catch (err) {
-    console.log(err);
-  }
-};
+      const res = await api.get("/resume/my", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-const deleteResume = async (id: number) => {
-  const confirmDelete = window.confirm(
-    "Are you sure you want to delete this resume?"
-  );
+      setResumes(res.data.resumes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  if (!confirmDelete) return;
+  // Delete Resume
+  const deleteResume = async (id: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this resume?"
+    );
 
-  try {
-    const token = localStorage.getItem("token");
+    if (!confirmDelete) return;
 
-    const res = await api.delete(`/resume/delete/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const token = localStorage.getItem("token");
 
-    alert(res.data.message);
+      const res = await api.delete(`/resume/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    // Refresh the list
+      alert(res.data.message);
+
+      fetchResumes();
+      setAnalysis(null);
+    } catch (err) {
+      console.log(err);
+      alert("Delete failed");
+    }
+  };
+
+  // Analyze Resume
+  const analyzeResume = async (filename: string) => {
+    try {
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      const res = await api.get(`/resume/analyze/${filename}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setAnalysis(res.data.analysis);
+    } catch (err) {
+      console.log(err);
+      alert("Analysis failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchResumes();
-  } catch (err: any) {
-    console.log(err);
-    alert("Delete failed");
-  }
-};
-useEffect(() => {
-  fetchResumes();
-}, []);
+  }, []);
+
   return (
     <div className="resume-container">
       <div className="resume-card">
@@ -92,64 +125,186 @@ useEffect(() => {
           }}
         />
 
-        <button onClick={uploadResume}>
-          Upload Resume
-        </button>
-<hr style={{ margin: "30px 0" }} />
+        <button onClick={uploadResume}>Upload Resume</button>
 
-<h2>📂 My Uploaded Resumes</h2>
+        <hr style={{ margin: "30px 0" }} />
 
-{resumes.length === 0 ? (
-  <p>No resumes uploaded yet.</p>
-) : (
-  resumes.map((resume) => (
-    <div
-      key={resume.id}
-      style={{
-        border: "1px solid #ddd",
-        padding: "10px",
-        marginTop: "10px",
-        borderRadius: "8px",
-      }}
-    >
-      <p>
-        <strong>{resume.original_name}</strong>
+        <h2>📂 My Uploaded Resumes</h2>
+
+        {resumes.length === 0 ? (
+          <p>No resumes uploaded yet.</p>
+        ) : (
+          resumes.map((resume) => (
+            <div
+              key={resume.id}
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: "10px",
+                padding: "15px",
+                marginTop: "15px",
+              }}
+            >
+              <p>
+                <strong>{resume.original_name}</strong>
+              </p>
+
+              <small>
+                Uploaded:{" "}
+                {new Date(resume.uploaded_at).toLocaleString()}
+              </small>
+
+              <br />
+              <br />
+
+              <a
+                href={`http://localhost:5000/uploads/${resume.filename}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button style={{ marginRight: "10px" }}>
+                  👁 View
+                </button>
+              </a>
+
+              <button
+                style={{
+                  marginRight: "10px",
+                  background: "#2563eb",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 12px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={() => analyzeResume(resume.filename)}
+              >
+                🤖 Analyze
+              </button>
+
+              <button
+                style={{
+                  background: "#dc2626",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 12px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={() => deleteResume(resume.id)}
+              >
+                🗑 Delete
+              </button>
+            </div>
+          ))
+        )}
+
+        <hr style={{ margin: "30px 0" }} />
+
+       {loading && <p>🤖 Analyzing Resume...</p>}
+
+{analysis && (
+  <div
+    style={{
+      border: "1px solid #ddd",
+      borderRadius: "10px",
+      padding: "20px",
+      marginTop: "20px",
+      textAlign: "left",
+    }}
+  >
+    <h2>🤖 AI Resume Analysis</h2>
+
+    <h3>👤 Personal Information</h3>
+
+    <p><strong>Name:</strong> {analysis.name}</p>
+
+    <p><strong>Email:</strong> {analysis.email}</p>
+
+    <p><strong>Phone:</strong> {analysis.phone}</p>
+
+    <p>
+      <strong>GitHub:</strong>{" "}
+      {analysis.github !== "Not Found" ? (
+        <a href={analysis.github} target="_blank" rel="noreferrer">
+          {analysis.github}
+        </a>
+      ) : (
+        "Not Found"
+      )}
+    </p>
+
+    <p>
+      <strong>LinkedIn:</strong>{" "}
+      {analysis.linkedin !== "Not Found" ? (
+        <a href={analysis.linkedin} target="_blank" rel="noreferrer">
+          {analysis.linkedin}
+        </a>
+      ) : (
+        "Not Found"
+      )}
+    </p>
+
+    <hr />
+
+    <h3>🎓 Education</h3>
+    <p style={{ whiteSpace: "pre-wrap" }}>
+      {analysis.education}
+    </p>
+
+    <hr />
+
+    <h3>🚀 Projects</h3>
+    <p style={{ whiteSpace: "pre-wrap" }}>
+      {analysis.projects}
+    </p>
+
+    <hr />
+
+    <h3>📜 Certifications</h3>
+    <p style={{ whiteSpace: "pre-wrap" }}>
+      {analysis.certifications}
+    </p>
+
+    <hr />
+
+    <h3>📊 Resume Score: {analysis.score}/100</h3>
+
+    <h3>✅ Skills Found</h3>
+    <ul>
+      {analysis.foundSkills.map((skill: string) => (
+        <li key={skill}>{skill}</li>
+      ))}
+    </ul>
+
+    <h3>⚠ Missing Skills</h3>
+
+    {analysis.missingSkills.length === 0 ? (
+      <p style={{ color: "green" }}>
+        🎉 No missing skills found.
       </p>
+    ) : (
+      <ul>
+        {analysis.missingSkills.map((skill: string) => (
+          <li key={skill}>{skill}</li>
+        ))}
+      </ul>
+    )}
 
-      <small>
-        Uploaded: {new Date(resume.uploaded_at).toLocaleString()}
-      </small>
+    <h3>💡 Suggestions</h3>
 
-      <br />
-      <br />
-
-      <a
-        href={`http://localhost:5000/uploads/${resume.filename}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <button style={{ marginRight: "10px" }}>
-          👁 View
-        </button>
-      </a>
-
-      <button
-        style={{
-          background: "#dc2626",
-          color: "white",
-          border: "none",
-          padding: "8px 12px",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-        onClick={() => deleteResume(resume.id)}
-      >
-        🗑 Delete
-      </button>
-    </div>
-  ))
+    {analysis.suggestions.length === 0 ? (
+      <p style={{ color: "green" }}>
+        🎉 Excellent Resume! No suggestions.
+      </p>
+    ) : (
+      <ul>
+        {analysis.suggestions.map((item: string) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    )}
+  </div>
 )}
-
       </div>
     </div>
   );
