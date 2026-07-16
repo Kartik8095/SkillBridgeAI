@@ -1,0 +1,22 @@
+.roadmap-page{
+    min-height:100vh;
+    background:#0F172A;
+    color:white;
+    padding:40px;
+}
+
+.roadmap-card{
+    background:#1E293B;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+.roadmap-card h2{
+    margin-bottom:15px;
+}
+
+progress{
+    width:100%;
+    height:18px;
+}

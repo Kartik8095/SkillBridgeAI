@@ -1,0 +1,85 @@
+.jobs-page{
+
+    min-height:100vh;
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:40px;
+
+}
+
+.jobs-page h1{
+
+    margin-bottom:10px;
+
+}
+
+.jobs-page h2{
+
+    color:#38BDF8;
+
+    margin-bottom:30px;
+
+}
+
+.jobs-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:20px;
+
+}
+
+.job-card{
+
+    background:#1E293B;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+
+}
+
+.job-card h3{
+
+    color:#3B82F6;
+
+}
+
+.job-card p{
+
+    margin:10px 0;
+
+}
+
+.job-card button{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563EB;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+.job-card button:hover{
+
+    background:#1D4ED8;
+
+}

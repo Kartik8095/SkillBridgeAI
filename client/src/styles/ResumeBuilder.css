@@ -1,0 +1,84 @@
+.builder-page{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+
+    min-height:100vh;
+
+    background:#0F172A;
+
+    padding:40px;
+
+}
+
+.builder-form{
+
+    background:#1E293B;
+
+    padding:30px;
+
+    border-radius:20px;
+
+}
+
+.builder-form h1{
+
+    color:white;
+
+    margin-bottom:25px;
+
+}
+
+.builder-form input,
+.builder-form textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+}
+
+.builder-form textarea{
+
+    min-height:100px;
+
+}
+
+.builder-form button{
+
+    width:100%;
+
+    padding:14px;
+
+    background:#2563EB;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+.resume-preview{
+
+    background:white;
+
+    color:black;
+
+    border-radius:20px;
+
+    padding:40px;
+
+}

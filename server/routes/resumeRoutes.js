@@ -13,6 +13,11 @@ const {
   getProfile,
   updateProfile,
   getCareerCoach,
+  getJobs,
+  getInterviewQuestions,
+  getRoadmap,
+  getSkillTracker,
+  getMockInterview
 } = require("../controllers/resumeController");
 
 const storage = multer.diskStorage({
@@ -62,5 +67,31 @@ router.get(
   verifyToken,
   getCareerCoach
 );
+router.get(
+    "/jobs",
+    verifyToken,
+    getJobs
+);
+router.get(
+    "/interview",
+    verifyToken,
+    getInterviewQuestions
+);
+router.get(
+    "/roadmap",
+    verifyToken,
+    getRoadmap
+);
 
+router.get(
+    "/skill-tracker",
+    verifyToken,
+    getSkillTracker
+);
+
+router.get(
+    "/mock-interview",
+    verifyToken,
+    getMockInterview
+);
 module.exports = router;

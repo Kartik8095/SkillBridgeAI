@@ -26,9 +26,10 @@ export default function Sidebar() {
 
       <button onClick={() => navigate("/jobs")}>💼 Jobs</button>
 
-      <button onClick={() => navigate("/interview")}>🎯 Interview</button>
+      <button onClick={() => navigate("/mock-interview")}>🎯 Interview</button>
 
       <button onClick={() => navigate("/roadmap")}>📚 Roadmap</button>
+      <button onClick={() => navigate("/resume-builder")}>📝 Resume Builder</button>
 
       <button onClick={() => navigate("/settings")}>⚙ Settings</button>
 

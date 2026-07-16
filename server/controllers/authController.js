@@ -324,3 +324,51 @@ module.exports = {
   updateProfile,
   changePassword,
 };
+
+exports.getInterviewQuestions = (req, res) => {
+
+    res.json({
+
+        technical: [
+
+            "Explain OOP concepts.",
+
+            "What is REST API?",
+
+            "Difference between SQL and NoSQL?",
+
+            "Explain JWT Authentication.",
+
+            "What is React?"
+
+        ],
+
+        hr: [
+
+            "Tell me about yourself.",
+
+            "Why should we hire you?",
+
+            "Describe a challenge you solved.",
+
+            "Where do you see yourself in 5 years?"
+
+        ],
+
+        coding: [
+
+            "Reverse a String",
+
+            "Palindrome Number",
+
+            "Two Sum Problem",
+
+            "Find Duplicate Elements",
+
+            "Binary Search"
+
+        ]
+
+    });
+
+};

@@ -1,0 +1,59 @@
+.interview-page{
+
+    min-height:100vh;
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:40px;
+
+}
+
+.interview-page h1{
+
+    margin-bottom:30px;
+
+}
+
+.interview-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+
+    gap:20px;
+
+}
+
+.interview-card{
+
+    background:#1E293B;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+
+}
+
+.interview-card h2{
+
+    color:#3B82F6;
+
+    margin-bottom:20px;
+
+}
+
+.interview-card ul{
+
+    padding-left:20px;
+
+}
+
+.interview-card li{
+
+    margin:10px 0;
+
+}

@@ -1,0 +1,41 @@
+.mock-page{
+
+    min-height:100vh;
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:40px;
+
+}
+
+.question-card{
+
+    background:#1E293B;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+}
+
+.question-card textarea{
+
+    width:100%;
+
+    min-height:120px;
+
+    margin-top:15px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    resize:vertical;
+
+}

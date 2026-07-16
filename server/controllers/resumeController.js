@@ -486,7 +486,7 @@ exports.getCareerCoach = (req, res) => {
         FROM resume_analysis ra
         JOIN resumes r
         ON ra.resume_id = r.id
-        WHERE r.user_id=?
+        WHERE r.user_id = ?
         ORDER BY ra.created_at DESC
         LIMIT 1
         `,
@@ -494,95 +494,296 @@ exports.getCareerCoach = (req, res) => {
         (err, result) => {
 
             if (err) {
+                console.log(err);
                 return res.status(500).json({
-                    success:false,
-                    message:"Database Error"
+                    success: false,
+                    message: "Database Error"
                 });
             }
 
-            if(result.length===0){
+            if (result.length === 0) {
 
                 return res.json({
-                    career:"No Resume Found",
-                    nextSkills:[],
-                    projects:[],
-                    certifications:[]
+                    career: "Upload a resume first",
+                    currentSkills: [],
+                    nextSkills: [],
+                    projects: [],
+                    certifications: [],
+                    roadmap: []
                 });
 
             }
 
-            const skills = JSON.parse(result[0].foundSkills || "[]");
+            let skills = [];
+
+            try {
+                skills = JSON.parse(result[0].foundSkills || "[]");
+            } catch {
+                skills = [];
+            }
 
             let career = "Software Developer";
-
             let nextSkills = [];
             let projects = [];
             let certifications = [];
+            let roadmap = [];
 
-            if(skills.includes("Java")){
+            // ===== Full Stack =====
+            if (
+                skills.includes("JavaScript") ||
+                skills.includes("HTML")
+            ) {
 
-                career="Java Backend Developer";
+                career = "Full Stack Developer";
 
-                nextSkills=[
+                nextSkills = [
+                    "React",
+                    "Node.js",
+                    "Express",
+                    "MySQL",
+                    "Git"
+                ];
+
+                projects = [
+                    "Portfolio Website",
+                    "Chat Application",
+                    "E-Commerce Website"
+                ];
+
+                certifications = [
+                    "Meta React",
+                    "AWS Cloud Practitioner"
+                ];
+
+                roadmap = [
+                    "Week 1 - Learn React",
+                    "Week 2 - Learn Node & Express",
+                    "Week 3 - Authentication + MySQL",
+                    "Week 4 - Deploy Full Stack Project"
+                ];
+
+            }
+
+            // ===== Java =====
+            if (skills.includes("Java")) {
+
+                career = "Java Backend Developer";
+
+                nextSkills = [
                     "Spring Boot",
-                    "REST API",
+                    "REST APIs",
                     "Docker",
                     "AWS"
                 ];
 
-                projects=[
-                    "Hospital Management System",
-                    "Banking Application",
-                    "E-Commerce Backend"
+                projects = [
+                    "Bank Management",
+                    "Hospital Management",
+                    "Library Management"
                 ];
 
-                certifications=[
+                certifications = [
                     "Oracle Java",
                     "AWS Cloud Practitioner"
                 ];
 
-            }
-
-            if(skills.includes("JavaScript")){
-
-                career="Full Stack Developer";
-
-                nextSkills=[
-                    "React",
-                    "Node.js",
-                    "Express",
-                    "MongoDB"
-                ];
-
-                projects=[
-                    "Chat Application",
-                    "Job Portal",
-                    "Food Delivery App"
-                ];
-
-                certifications=[
-                    "Meta React",
-                    "MongoDB Associate"
+                roadmap = [
+                    "Week 1 - Spring Boot",
+                    "Week 2 - REST APIs",
+                    "Week 3 - Docker",
+                    "Week 4 - Deploy to AWS"
                 ];
 
             }
 
             res.json({
-
                 career,
-
-                currentSkills:skills,
-
+                currentSkills: skills,
                 nextSkills,
-
                 projects,
-
-                certifications
-
+                certifications,
+                roadmap
             });
 
         }
 
     );
+
+};
+
+exports.getJobs = (req, res) => {
+
+    res.json({
+
+        career: "Full Stack Developer",
+
+        jobs: [
+
+            {
+                title: "Junior Full Stack Developer",
+                company: "Infosys",
+                location: "Bangalore",
+                salary: "₹6 - ₹8 LPA"
+            },
+
+            {
+                title: "React Developer",
+                company: "TCS",
+                location: "Pune",
+                salary: "₹5 - ₹7 LPA"
+            },
+
+            {
+                title: "Node.js Developer",
+                company: "Wipro",
+                location: "Hyderabad",
+                salary: "₹6 - ₹9 LPA"
+            }
+
+        ]
+
+    });
+
+};
+exports.getInterviewQuestions = (req, res) => {
+
+    res.json({
+
+        technical: [
+
+            "Explain OOP concepts.",
+            "What is React?",
+            "What is Express?",
+            "What is JWT?",
+            "Difference between SQL and NoSQL?"
+
+        ],
+
+        hr: [
+
+            "Tell me about yourself.",
+            "Why should we hire you?",
+            "Where do you see yourself in 5 years?",
+            "Describe a challenge you solved."
+
+        ],
+
+        coding: [
+
+            "Reverse a String",
+            "Palindrome Number",
+            "Two Sum Problem",
+            "Binary Search",
+            "Find Duplicate Elements"
+
+        ]
+
+    });
+
+};
+
+exports.getRoadmap = (req,res)=>{
+
+    res.json({
+
+        roadmap:[
+
+            "Week 1 - Learn React",
+
+            "Week 2 - Build React Project",
+
+            "Week 3 - Learn Node.js & Express",
+
+            "Week 4 - Deploy Full Stack App"
+
+        ]
+
+    });
+
+};
+
+exports.getSkillTracker = (req,res)=>{
+
+    res.json({
+
+        skills:[
+
+            {
+                name:"Java",
+                progress:100
+            },
+
+            {
+                name:"HTML",
+                progress:100
+            },
+
+            {
+                name:"CSS",
+                progress:90
+            },
+
+            {
+                name:"JavaScript",
+                progress:75
+            },
+
+            {
+                name:"React",
+                progress:30
+            },
+
+            {
+                name:"Node.js",
+                progress:20
+            },
+
+            {
+                name:"Express",
+                progress:15
+            },
+
+            {
+                name:"MySQL",
+                progress:50
+            }
+
+        ]
+
+    });
+
+};
+
+exports.getMockInterview = (req,res)=>{
+
+    res.json({
+
+        role:"Full Stack Developer",
+
+        questions:[
+
+            "Tell me about yourself.",
+
+            "What is React?",
+
+            "Difference between var let const?",
+
+            "Explain REST API.",
+
+            "What is JWT?",
+
+            "Difference between SQL and NoSQL?",
+
+            "Explain Express Middleware.",
+
+            "What is useEffect?",
+
+            "Difference between State and Props?",
+
+            "Why should we hire you?"
+
+        ]
+
+    });
 
 };

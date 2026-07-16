@@ -1,0 +1,61 @@
+.career-page{
+    min-height:100vh;
+    background:#0F172A;
+    color:white;
+    padding:40px;
+}
+
+.career-page h1{
+    margin-bottom:30px;
+}
+
+.career-card{
+    background:#1E293B;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+}
+
+.career-card h2{
+    color:#3B82F6;
+    margin-bottom:15px;
+}
+
+.career-card ul{
+    list-style:none;
+    padding:0;
+}
+
+.career-card li{
+    padding:8px 0;
+}
+
+.career-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:20px;
+}
+
+.tag{
+    display:inline-block;
+    padding:8px 14px;
+    margin:6px;
+    border-radius:20px;
+    background:#22C55E;
+    color:white;
+    font-weight:600;
+}
+
+.tag.blue{
+    background:#2563EB;
+}
+
+.career-card h3{
+    color:#38BDF8;
+    font-size:28px;
+}
+
+.career-card li{
+    margin:10px 0;
+}

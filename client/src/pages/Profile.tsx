@@ -5,14 +5,18 @@ import { toast } from "react-toastify";
 
 function Profile() {
 
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    college: "",
-    course: "",
-    graduation_year: "",
-  });
+ const [user, setUser] = useState({
+  name: "",
+  email: "",
+  phone: "",
+  college: "",
+  course: "",
+  graduation_year: "",
+  github: "",
+  linkedin: "",
+  bio: "",
+  profile_image: "",
+});
 
   const [password, setPassword] = useState({
     currentPassword: "",
@@ -89,7 +93,27 @@ function Profile() {
     <div className="profile-page">
 
       <div className="profile-card">
+        <div className="profile-avatar">
 
+  {user.profile_image ? (
+
+    <img
+      src={`http://localhost:5000/uploads/${user.profile_image}`}
+      alt=""
+    />
+
+  ) : (
+
+    user.name
+      ? user.name
+          .split(" ")
+          .map((n)=>n[0])
+          .join("")
+      : "U"
+
+  )}
+
+</div>
         <h1>👤 My Profile</h1>
 
         <input
@@ -136,6 +160,30 @@ function Profile() {
             setUser({...user,graduation_year:e.target.value})
           }
         />
+
+        <input
+  value={user.github}
+  placeholder="GitHub URL"
+  onChange={(e)=>
+    setUser({...user,github:e.target.value})
+  }
+/>
+
+<input
+  value={user.linkedin}
+  placeholder="LinkedIn URL"
+  onChange={(e)=>
+    setUser({...user,linkedin:e.target.value})
+  }
+/>
+
+<textarea
+  value={user.bio}
+  placeholder="Tell us about yourself..."
+  onChange={(e)=>
+    setUser({...user,bio:e.target.value})
+  }
+/>
 
         <button onClick={updateProfile}>
           Save Profile
